@@ -30,7 +30,7 @@ export default function ({ wallpapers, loading }: Props) {
                       >
                         <LazyLoadImage
                           src={wallpaper.img_url}
-                          placeholderSrc={`/logo.png`}
+                          placeholderSrc={`/template.png`}
                           alt={wallpaper.img_description}
                           className="inline-block"
                         />
