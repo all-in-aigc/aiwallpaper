@@ -4,10 +4,13 @@ import {
   Dispatch,
   KeyboardEvent,
   SetStateAction,
+  useEffect,
   useRef,
   useState,
 } from "react";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Wallpaper } from "@/types/wallpaper";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -86,32 +89,37 @@ export default function ({ setWallpapers }: Props) {
     requestGenWallpaper();
   };
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
     <div className="flex flex-col w-full">
       <form
-        name="email-form"
-        method="get"
         className="flex w-full flex-col gap-3 sm:flex-row"
         onSubmit={() => {
           return false;
         }}
       >
-        <input
+        <Input
           type="text"
-          className="h-9 w-full rounded-md border border-solid border-black px-4 py-6 text-sm text-[#333333]"
           placeholder="Wallpaper description"
           onChange={(e) => setDescription(e.target.value)}
           onKeyDown={handleInputKeydown}
           disabled={loading}
           ref={inputRef}
         />
-        <input
+
+        {/* <input
           type="button"
           value={loading ? "Generating..." : "Generate"}
           className="cursor-pointer rounded-md bg-black px-6 py-2 font-semibold text-white disabled:bg-gray-300"
           disabled={loading}
           onClick={handleSubmit}
-        />
+        /> */}
+        <Button type="button" disabled={loading} onClick={handleSubmit}>
+          {loading ? "Generating..." : "Generate"}
+        </Button>
       </form>
     </div>
   );

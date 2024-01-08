@@ -51,20 +51,27 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen">
-      <Header />
-      <section>
-        <div className="mx-auto w-full max-w-7xl overflow-hidden px-5 py-10 md:px-10 lg:px-20 lg:py-2">
-          <div className="flex flex-col items-center gap-y-16 pt-10 sm:gap-y-20 lg:pt-20">
-            <div className="max-w-3xl">
-              <Hero />
-              <div className="mx-auto mb-4 flex max-w-lg justify-center">
-                <Input wallpapers={wallpapers} setWallpapers={setWallpapers} />
+      <div className="bg-secondary md:pb-10">
+        <Header />
+        <section>
+          <div className="mx-auto w-full max-w-7xl overflow-hidden px-5 py-10 md:px-10 lg:px-20 lg:py-2">
+            <div className="flex flex-col items-center pt-0 lg:pt-20">
+              <div className="max-w-3xl">
+                <Hero />
+                <div className="mx-auto mb-4 flex max-w-lg justify-center">
+                  <Input
+                    wallpapers={wallpapers}
+                    setWallpapers={setWallpapers}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-      <Wallpapers wallpapers={wallpapers} loading={loading} />
+        </section>
+      </div>
+      <div className="pt-10">
+        <Wallpapers wallpapers={wallpapers} loading={loading} />
+      </div>
       <Footer />
     </div>
   );

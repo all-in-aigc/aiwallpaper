@@ -1,5 +1,9 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FaDownload } from "react-icons/fa";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -14,9 +18,9 @@ interface Props {
 export default function ({ wallpapers, loading }: Props) {
   return (
     <section>
-      <div className="mx-auto w-full max-w-5xl px-5 py-16 md:px-10 md:py-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl px-5 py-2 md:px-10 md:py-8 lg:py-8">
         <div className="flex flex-col items-stretch">
-          <div className="gap-x-8 [column-count:1] md:grid-cols-2 md:gap-x-4 md:[column-count:2]">
+          <div className="gap-x-8 [column-count:1] md:grid-cols-2 md:gap-x-4 md:[column-count:3]">
             {loading ? (
               <div className="text-center mx-auto py-4">loading...</div>
             ) : (
@@ -26,7 +30,7 @@ export default function ({ wallpapers, loading }: Props) {
                     return (
                       <div
                         key={idx}
-                        className="mb-12 inline-block border border-solid border-[#cdcdcd] md:mb-8 lg:mb-10"
+                        className="rounded-xl  overflow-hidden mb-12 inline-block border border-solid border-[#cdcdcd] md:mb-8 lg:mb-10"
                       >
                         <LazyLoadImage
                           src={wallpaper.img_url}
@@ -39,10 +43,21 @@ export default function ({ wallpapers, loading }: Props) {
                           <p className="flex-col text-[#808080]">
                             {wallpaper.img_description}
                           </p>
-                          <div className="mb-5 mt-6 flex flex-wrap gap-2 md:mb-6 lg:mb-8">
-                            <div className="rounded-sm bg-[#d9d9d9] p-2 text-sm font-semibold uppercase text-[#636262]">
-                              <p>{wallpaper.img_size}</p>
-                            </div>
+                          <div className="flex items-center mb-5 mt-6 flex-wrap gap-2 md:mb-6 lg:mb-8">
+                            <Badge variant="secondary">
+                              {wallpaper.img_size}
+                            </Badge>
+
+                            <div className="flex-1"></div>
+                            <Avatar>
+                              <AvatarImage
+                                src={wallpaper.created_user?.avatar_url}
+                                alt={wallpaper.created_user?.nickname}
+                              />
+                              <AvatarFallback>
+                                {wallpaper.created_user?.nickname}
+                              </AvatarFallback>
+                            </Avatar>
                           </div>
                           <div className="flex flex-wrap items-center justify-between gap-4">
                             <a
@@ -58,9 +73,7 @@ export default function ({ wallpapers, loading }: Props) {
                               text={wallpaper.img_description}
                               onCopy={() => toast.success("Copied")}
                             >
-                              <span className="cursor-pointer inline-block rounded-md bg-black px-6 py-3 text-center font-semibold text-white">
-                                Copy Prompt
-                              </span>
+                              <Button>Copy Prompt</Button>
                             </CopyToClipboard>
                           </div>
                         </div>
