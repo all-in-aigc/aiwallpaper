@@ -4,8 +4,8 @@ import axios from "axios";
 import fs from "fs";
 
 AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_KEY,
+  accessKeyId: process.env.AWS_AK,
+  secretAccessKey: process.env.AWS_SK,
 });
 
 const s3 = new AWS.S3();
