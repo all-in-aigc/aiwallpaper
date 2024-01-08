@@ -15,7 +15,7 @@ export default function () {
                 className="w-10 h-10 rounded-full mr-2"
                 alt="logo"
               />
-              <span className="font-medium">WallGun</span>
+              <span className="font-bold">AI Wallpaper</span>
             </a>
 
             <div className="flex flex-row items-center space-y-8 lg:flex lg:flex-row lg:space-x-3 lg:space-y-0">

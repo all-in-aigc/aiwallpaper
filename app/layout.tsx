@@ -8,8 +8,8 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AI Wallpaper Generator | WallGun",
-  description: "WallGun is an AI Wallpaper Generator.",
+  title: "AI Wallpaper Generator | AI Wallpaper Shop",
+  description: "AI Wallpaper Shop is an AI Wallpaper Generator.",
 };
 
 export default function RootLayout({
@@ -22,7 +22,14 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Toaster position="top-center" richColors />
+
           {children}
+
+          <script
+            async
+            src="https://chatgpt-umami.vercel.app/script.js"
+            data-website-id="def28550-20ea-49d8-9c1a-68dbfaba0134"
+          ></script>
         </body>
       </html>
     </ClerkProvider>
