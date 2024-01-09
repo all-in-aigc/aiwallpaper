@@ -6,13 +6,41 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Hero from "@/components/hero";
 import Input from "@/components/input";
+import Producthunt from "@/components/producthunt";
+import { User } from "@/types/user";
 import { Wallpaper } from "@/types/wallpaper";
 import Wallpapers from "@/components/wallpapers";
 import { toast } from "sonner";
 
 export default function Home() {
   const [wallpapers, setWallpapers] = useState<Wallpaper[]>([]);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const fetchUserInfo = async function () {
+    try {
+      const uri = "/api/get-user-info";
+      const params = {};
+
+      const resp = await fetch(uri, {
+        method: "POST",
+        body: JSON.stringify(params),
+      });
+
+      if (resp.ok) {
+        const res = await resp.json();
+        if (res.data) {
+          setUser(res.data);
+          return;
+        }
+      }
+
+      toast.error("get user info failed");
+    } catch (e) {
+      console.log("get user info failed: ", e);
+      toast.error("get user info failed");
+    }
+  };
 
   const fetchWallpapers = async function (page: number) {
     try {
@@ -46,6 +74,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    // fetchUserInfo();
     fetchWallpapers(1);
   }, []);
 
@@ -58,6 +87,7 @@ export default function Home() {
             <div className="flex flex-col items-center pt-0 lg:pt-20">
               <div className="max-w-3xl">
                 <Hero />
+                <Producthunt />
                 <div className="mx-auto mb-4 flex max-w-lg justify-center">
                   <Input
                     wallpapers={wallpapers}
