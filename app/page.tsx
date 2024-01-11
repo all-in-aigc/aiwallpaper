@@ -87,7 +87,9 @@ export default function Home() {
             <div className="flex flex-col items-center pt-0 lg:pt-20">
               <div className="max-w-3xl">
                 <Hero />
-                <Producthunt />
+                <div className="my-4 md:my-6">
+                  <Producthunt />
+                </div>
                 <div className="mx-auto mb-4 flex max-w-lg justify-center">
                   <Input
                     wallpapers={wallpapers}

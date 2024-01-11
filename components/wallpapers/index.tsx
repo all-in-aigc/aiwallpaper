@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FaDownload } from "react-icons/fa";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import Image from "next/image";
 import { Wallpaper } from "@/types/wallpaper";
 import { toast } from "sonner";
 
@@ -32,11 +32,12 @@ export default function ({ wallpapers, loading }: Props) {
                         key={idx}
                         className="rounded-xl  overflow-hidden mb-12 inline-block border border-solid border-[#cdcdcd] md:mb-8 lg:mb-10"
                       >
-                        <LazyLoadImage
+                        <Image
                           src={wallpaper.img_url}
-                          placeholderSrc={`/template.png`}
                           alt={wallpaper.img_description}
-                          className="inline-block"
+                          width={350}
+                          height={200}
+                          loading="lazy"
                         />
 
                         <div className="px-5 py-8 sm:px-6">

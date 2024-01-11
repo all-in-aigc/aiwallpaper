@@ -58,7 +58,7 @@ export async function POST(req: Request) {
     const img_name = encodeURIComponent(description);
     const s3_img = await downloadAndUploadImage(
       raw_img_url,
-      "gpts-works",
+      process.env.AWS_BUCKET || "trysai",
       `wallpapers/${img_name}.png`
     );
     const img_url = s3_img.Location;
