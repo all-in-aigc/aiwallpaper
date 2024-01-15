@@ -81,7 +81,7 @@ export async function POST(req: Request) {
       },
       mode: plan === "monthly" ? "subscription" : "payment",
       success_url: `${process.env.WEB_BASE_URI}/pay-success/{CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.WEB_BASE_URI}/pay-cancel`,
+      cancel_url: `${process.env.WEB_BASE_URI}/pricing`,
     });
 
     const stripe_session_id = session.id;
