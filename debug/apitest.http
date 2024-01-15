@@ -16,4 +16,12 @@ Content-Type: application/json
     "page": 1
 }
 
+### checkout
+POST {{baseUri}}/checkout
+Content-Type: application/json
+
+{
+    "page": 1
+}
+
 

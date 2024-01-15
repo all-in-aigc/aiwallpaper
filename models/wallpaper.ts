@@ -25,6 +25,37 @@ export async function insertWallpaper(wallpaper: Wallpaper) {
   return res;
 }
 
+export async function getWallpapersCount(): Promise<number> {
+  const db = getDb();
+  const res = await db.query(`SELECT count(1) as count FROM wallpapers`);
+  if (res.rowCount === 0) {
+    return 0;
+  }
+
+  const { rows } = res;
+  const row = rows[0];
+
+  return row.count;
+}
+
+export async function getUserWallpapersCount(
+  user_email: string
+): Promise<number> {
+  const db = getDb();
+  const res = await db.query(
+    `SELECT count(1) as count FROM wallpapers WHERE user_email = $1`,
+    [user_email]
+  );
+  if (res.rowCount === 0) {
+    return 0;
+  }
+
+  const { rows } = res;
+  const row = rows[0];
+
+  return row.count;
+}
+
 export async function getWallpapers(
   page: number,
   limit: number

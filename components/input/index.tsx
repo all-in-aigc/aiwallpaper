@@ -4,11 +4,13 @@ import {
   Dispatch,
   KeyboardEvent,
   SetStateAction,
+  useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
 
+import { AppContext } from "@/contexts/AppContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Wallpaper } from "@/types/wallpaper";
@@ -21,6 +23,8 @@ interface Props {
 }
 
 export default function ({ setWallpapers }: Props) {
+  const { user, fetchUserInfo } = useContext(AppContext);
+
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -49,15 +53,23 @@ export default function ({ setWallpapers }: Props) {
       console.log("gen wallpaper resp", resp);
 
       if (resp.ok) {
-        const res = await resp.json();
-        if (res.data && res.data.img_url) {
-          const wallpaper: Wallpaper = res.data;
+        const { code, message, data } = await resp.json();
+        if (code !== 0) {
+          toast.error(message);
+          return;
+        }
+        if (data && data.img_url) {
+          fetchUserInfo();
+
+          setDescription("");
+
+          const wallpaper: Wallpaper = data;
           setWallpaper(wallpaper);
           setWallpapers((wallpapers: Wallpaper[]) => [
             wallpaper,
             ...wallpapers,
           ]);
-          setDescription("");
+
           toast.success("gen wallpaper ok");
           return;
         }
@@ -86,6 +98,16 @@ export default function ({ setWallpapers }: Props) {
       return;
     }
 
+    if (!user) {
+      toast.error("please sign in");
+      return;
+    }
+
+    if (user.credits && user.credits.left_credits < 1) {
+      toast.error("credits not enough");
+      return;
+    }
+
     requestGenWallpaper();
   };
 
@@ -104,6 +126,7 @@ export default function ({ setWallpapers }: Props) {
         <Input
           type="text"
           placeholder="Wallpaper description"
+          value={description}
           onChange={(e) => setDescription(e.target.value)}
           onKeyDown={handleInputKeydown}
           disabled={loading}

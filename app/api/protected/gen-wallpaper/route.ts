@@ -6,6 +6,7 @@ import { Wallpaper } from "@/types/wallpaper";
 import { currentUser } from "@clerk/nextjs";
 import { downloadAndUploadImage } from "@/lib/s3";
 import { getOpenAIClient } from "@/services/openai";
+import { getUserCredits } from "@/services/order";
 import { insertWallpaper } from "@/models/wallpaper";
 import { saveUser } from "@/services/user";
 
@@ -34,6 +35,11 @@ export async function POST(req: Request) {
     };
 
     await saveUser(userInfo);
+
+    const user_credits = await getUserCredits(user_email);
+    if (!user_credits || user_credits.left_credits < 1) {
+      return respErr("credits not enough");
+    }
 
     const llm_name = "dall-e-3";
     const img_size = "1792x1024";
