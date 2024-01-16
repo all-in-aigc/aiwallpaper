@@ -31,7 +31,7 @@ export default function ({ user }: Props) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mx-4">
         <DropdownMenuLabel className="text-center truncate">
-          {user.nickname}
+          {user.nickname ? user.nickname : user.email}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
