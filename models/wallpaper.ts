@@ -7,9 +7,9 @@ export async function insertWallpaper(wallpaper: Wallpaper) {
   const db = getDb();
   const res = await db.query(
     `INSERT INTO wallpapers 
-        (user_email, img_description, img_size, img_url, llm_name, llm_params, created_at) 
+        (user_email, img_description, img_size, img_url, llm_name, llm_params, created_at, uuid) 
         VALUES 
-        ($1, $2, $3, $4, $5, $6, $7)
+        ($1, $2, $3, $4, $5, $6, $7, $8)
     `,
     [
       wallpaper.user_email,
@@ -19,6 +19,7 @@ export async function insertWallpaper(wallpaper: Wallpaper) {
       wallpaper.llm_name,
       wallpaper.llm_params,
       wallpaper.created_at,
+      wallpaper.uuid,
     ]
   );
 
@@ -56,10 +57,71 @@ export async function getUserWallpapersCount(
   return row.count;
 }
 
+export async function findWallpaperById(
+  id: number
+): Promise<Wallpaper | undefined> {
+  const db = getDb();
+  const res = await db.query(
+    `select w.*, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from wallpapers as w left join users as u on w.user_email = u.email where w.id = $1`,
+    [id]
+  );
+  if (res.rowCount === 0) {
+    return;
+  }
+
+  const wallpaper = formatWallpaper(res.rows[0]);
+
+  return wallpaper;
+}
+
+export async function findWallpaperByUuid(
+  uuid: string
+): Promise<Wallpaper | undefined> {
+  const db = getDb();
+  const res = await db.query(
+    `select w.*, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from wallpapers as w left join users as u on w.user_email = u.email where w.uuid = $1`,
+    [uuid]
+  );
+  if (res.rowCount === 0) {
+    return;
+  }
+
+  const wallpaper = formatWallpaper(res.rows[0]);
+
+  return wallpaper;
+}
+
+export async function getRandWallpapers(
+  page: number,
+  limit: number
+): Promise<Wallpaper[]> {
+  if (page <= 0) {
+    page = 1;
+  }
+  if (limit <= 0) {
+    limit = 50;
+  }
+  const offset = (page - 1) * limit;
+
+  const db = getDb();
+  const res = await db.query(
+    `select w.*, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from wallpapers as w left join users as u on w.user_email = u.email order by random() limit $1 offset $2`,
+    [limit, offset]
+  );
+
+  if (res.rowCount === 0) {
+    return [];
+  }
+
+  const wallpapers = getWallpapersFromSqlResult(res);
+
+  return wallpapers;
+}
+
 export async function getWallpapers(
   page: number,
   limit: number
-): Promise<Wallpaper[] | undefined> {
+): Promise<Wallpaper[]> {
   if (page < 1) {
     page = 1;
   }
@@ -74,7 +136,7 @@ export async function getWallpapers(
     [limit, offset]
   );
   if (res.rowCount === 0) {
-    return undefined;
+    return [];
   }
 
   const wallpapers = getWallpapersFromSqlResult(res);
@@ -111,6 +173,7 @@ export function formatWallpaper(row: QueryResultRow): Wallpaper | undefined {
     llm_name: row.llm_name,
     llm_params: row.llm_params,
     created_at: row.created_at,
+    uuid: row.uuid,
   };
 
   if (row.user_name || row.user_avatar) {

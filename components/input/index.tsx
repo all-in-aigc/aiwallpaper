@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Dispatch,
-  KeyboardEvent,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { KeyboardEvent, useContext, useEffect, useRef, useState } from "react";
 
 import { AppContext } from "@/contexts/AppContext";
 import { Button } from "@/components/ui/button";
@@ -17,12 +9,7 @@ import { Wallpaper } from "@/types/wallpaper";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-interface Props {
-  wallpapers: Wallpaper[];
-  setWallpapers: Dispatch<SetStateAction<Wallpaper[]>>;
-}
-
-export default function ({ setWallpapers }: Props) {
+export default function () {
   const { user, fetchUserInfo } = useContext(AppContext);
 
   const [description, setDescription] = useState("");
@@ -65,10 +52,10 @@ export default function ({ setWallpapers }: Props) {
 
           const wallpaper: Wallpaper = data;
           setWallpaper(wallpaper);
-          setWallpapers((wallpapers: Wallpaper[]) => [
-            wallpaper,
-            ...wallpapers,
-          ]);
+
+          router.push(
+            `/wallpaper/${wallpaper.img_description}/${wallpaper.uuid}`
+          );
 
           toast.success("gen wallpaper ok");
           return;

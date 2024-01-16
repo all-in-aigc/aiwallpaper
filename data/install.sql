@@ -3,7 +3,8 @@ CREATE TABLE users (
     email VARCHAR(255) UNIQUE NOT NULL,
     nickname VARCHAR(255),
     avatar_url VARCHAR(255),
-    created_at timestamptz
+    created_at timestamptz,
+    uuid UUID UNIQUE NOT NULL
 );
 
 CREATE TABLE wallpapers (
@@ -14,7 +15,8 @@ CREATE TABLE wallpapers (
     img_url TEXT,
     llm_name VARCHAR(100),
     llm_params JSON,
-    created_at timestamptz
+    created_at timestamptz,
+    uuid UUID UNIQUE NOT NULL
 );
 
 CREATE TABLE orders (

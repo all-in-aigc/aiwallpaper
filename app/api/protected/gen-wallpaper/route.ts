@@ -1,14 +1,13 @@
 import { respData, respErr } from "@/lib/resp";
 
 import { ImageGenerateParams } from "openai/resources/images.mjs";
-import { User } from "@/types/user";
 import { Wallpaper } from "@/types/wallpaper";
 import { currentUser } from "@clerk/nextjs";
 import { downloadAndUploadImage } from "@/lib/s3";
+import { genUuid } from "@/lib";
 import { getOpenAIClient } from "@/services/openai";
 import { getUserCredits } from "@/services/order";
 import { insertWallpaper } from "@/models/wallpaper";
-import { saveUser } from "@/services/user";
 
 export async function POST(req: Request) {
   const client = getOpenAIClient();
@@ -24,17 +23,7 @@ export async function POST(req: Request) {
       return respErr("invalid params");
     }
 
-    // save user
     const user_email = user.emailAddresses[0].emailAddress;
-    const nickname = user.firstName;
-    const avatarUrl = user.imageUrl;
-    const userInfo: User = {
-      email: user_email,
-      nickname: nickname || "",
-      avatar_url: avatarUrl,
-    };
-
-    await saveUser(userInfo);
 
     const user_credits = await getUserCredits(user_email);
     if (!user_credits || user_credits.left_credits < 1) {
@@ -77,6 +66,7 @@ export async function POST(req: Request) {
       llm_name: llm_name,
       llm_params: JSON.stringify(llm_params),
       created_at: created_at,
+      uuid: genUuid(),
     };
     await insertWallpaper(wallpaper);
 

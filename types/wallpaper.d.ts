@@ -10,4 +10,5 @@ export interface Wallpaper {
   llm_params?: any;
   created_at: string;
   created_user?: User;
+  uuid: string;
 }

@@ -1,9 +1,9 @@
 import { AppContext } from "@/contexts/AppContext";
 import { Button } from "@/components/ui/button";
+import Social from "@/components/social";
 import { Tab } from "@/types/tab";
-import { useContext } from "react";
 import User from "@/components/user";
-import Social from "../social";
+import { useContext } from "react";
 
 export default function () {
   const { user } = useContext(AppContext);
