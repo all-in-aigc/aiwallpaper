@@ -6,6 +6,8 @@ AI Wallpaper Generator by [aiwallpaper.shop](https://aiwallpaper.shop)
 
 [https://aiwallpaper.shop](https://aiwallpaper.shop)
 
+![demo](./preview.png)
+
 ## Quick Start
 
 1. clone project
