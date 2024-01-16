@@ -8,8 +8,14 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AI Wallpaper Generator | AI Wallpaper Shop",
-  description: "AI Wallpaper Shop is an AI Wallpaper Generator.",
+  title: {
+    template: "%s by AI Wallpaper Generator | AI Wallpaper Shop",
+    default: "AI Wallpaper Generator | AI Wallpaper Shop",
+  },
+  description:
+    "AI Wallpaper Shop is an AI Wallpaper Generator, used to generate beautiful wallpapers with AI.",
+  keywords:
+    "AI Wallpaper, AI Wallpaper Shop, AI Wallpaper Generator, AI Wallpaper image",
 };
 
 export default function RootLayout({

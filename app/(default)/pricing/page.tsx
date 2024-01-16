@@ -107,7 +107,7 @@ export default function () {
   };
 
   return (
-    <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <div className="relative isolate bg-white px-6 py-8 md:py-16 lg:px-8">
       <div className="mx-auto max-w-3xl text-center lg:max-w-4xl">
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-6xl">
           AI Wallpaper Pricing
@@ -132,12 +132,12 @@ export default function () {
               "rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10"
             )}
           >
-            <h3
+            <p
               id={tier.id}
               className="text-base font-semibold leading-7 text-indigo-600"
             >
               {tier.name}
-            </h3>
+            </p>
             <p className="mt-4 flex items-baseline gap-x-2">
               <span className="text-5xl font-bold tracking-tight text-gray-900">
                 {tier.priceMonthly}

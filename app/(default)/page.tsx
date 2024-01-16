@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Hero from "@/components/hero";
 import Input from "@/components/input";
@@ -8,8 +8,10 @@ import Producthunt from "@/components/producthunt";
 import { Wallpaper } from "@/types/wallpaper";
 import Wallpapers from "@/components/wallpapers";
 import { toast } from "sonner";
+import { AppContext } from "@/contexts/AppContext";
 
-export default function Home() {
+export default function () {
+  const { user } = useContext(AppContext);
   const [wallpapers, setWallpapers] = useState<Wallpaper[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -45,17 +47,19 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchWallpapers(1);
-  }, []);
+    if (user !== undefined) {
+      fetchWallpapers(1);
+    }
+  }, [user]);
 
   return (
-    <div className="mt-16">
+    <div className="md:mt-16">
       <div className="max-w-3xl mx-auto">
         <Hero />
         <div className="my-4 md:my-6">
           <Producthunt />
         </div>
-        <div className="mx-auto mb-4 flex max-w-lg justify-center">
+        <div className="mx-auto my-4 flex max-w-lg justify-center">
           <Input wallpapers={wallpapers} setWallpapers={setWallpapers} />
         </div>
       </div>

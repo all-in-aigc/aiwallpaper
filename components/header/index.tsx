@@ -1,9 +1,8 @@
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-
 import { AppContext } from "@/contexts/AppContext";
 import { Button } from "@/components/ui/button";
 import { Tab } from "@/types/tab";
 import { useContext } from "react";
+import User from "@/components/user";
 
 export default function () {
   const { user } = useContext(AppContext);
@@ -28,15 +27,6 @@ export default function () {
               </span>
             </a>
 
-            <div className="flex lg:hidden">
-              <button
-                type="button"
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-              >
-                <span className="sr-only">Open main menu</span>
-              </button>
-            </div>
-
             <div className="hidden md:flex ml-16">
               {navigations.map((tab: Tab, idx: number) => (
                 <a
@@ -52,22 +42,30 @@ export default function () {
             <div className="flex-1"></div>
 
             <div className="flex flex-row items-center lg:flex lg:flex-row lg:space-x-3 lg:space-y-0">
-              {user && user.credits && (
-                <div className="hidden md:block mr-8 font-medium cursor-pointer">
-                  credits:{" "}
-                  <span className="text-primary">
-                    {user.credits.left_credits}
-                  </span>
-                </div>
+              {user === undefined ? (
+                <>loading...</>
+              ) : (
+                <>
+                  {user ? (
+                    <>
+                      {user.credits && (
+                        <div className="hidden md:block mr-8 font-medium cursor-pointer">
+                          credits:{" "}
+                          <span className="text-primary">
+                            {user.credits.left_credits}
+                          </span>
+                        </div>
+                      )}
+
+                      <User user={user} />
+                    </>
+                  ) : (
+                    <a className="cursor-pointer" href="/si">
+                      <Button>Sign In</Button>
+                    </a>
+                  )}
+                </>
               )}
-              <SignedIn>
-                <UserButton afterSignOutUrl="/" />
-              </SignedIn>
-              <SignedOut>
-                <a href="/sign-in">
-                  <Button>Sign In</Button>
-                </a>
-              </SignedOut>
             </div>
             <a href="#" className="absolute right-5 lg:hidden"></a>
           </div>

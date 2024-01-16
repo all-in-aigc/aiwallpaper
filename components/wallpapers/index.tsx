@@ -18,7 +18,7 @@ interface Props {
 export default function ({ wallpapers, loading }: Props) {
   return (
     <section>
-      <div className="mx-auto w-full max-w-7xl px-5 py-2 md:px-10 md:py-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl px-0 py-2 md:px-10 md:py-8 lg:py-8">
         <div className="flex flex-col items-stretch">
           <div className="gap-x-8 [column-count:1] md:grid-cols-2 md:gap-x-4 md:[column-count:3]">
             {loading ? (
@@ -30,7 +30,7 @@ export default function ({ wallpapers, loading }: Props) {
                     return (
                       <div
                         key={idx}
-                        className="rounded-xl  overflow-hidden mb-12 inline-block border border-solid border-[#cdcdcd] md:mb-8 lg:mb-10"
+                        className="rounded-xl overflow-hidden mb-4 inline-block border border-solid border-[#cdcdcd] md:mb-8 lg:mb-10"
                       >
                         <Image
                           src={wallpaper.img_url}

@@ -14,7 +14,7 @@ export default function () {
         <BsTwitterX className="text-lg" />
       </a>
       <a
-        href="https://github.com/idoubi"
+        href="https://github.com/all-in-aigc/aiwallpaper"
         target="_blank"
         className="mx-3 flex max-w-[24px] flex-col items-center justify-center"
       >
@@ -28,7 +28,7 @@ export default function () {
         <SiBuymeacoffee className="text-lg" />
       </a>
       <a
-        href="https://www.producthunt.com/@idoubi/submitted"
+        href="https://www.producthunt.com/posts/ai-wallpaper?utm_source=aiwallpaper.shop"
         target="_blank"
         className="mx-3 flex max-w-[24px] flex-col items-center justify-center"
       >

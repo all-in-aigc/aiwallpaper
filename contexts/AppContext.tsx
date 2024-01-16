@@ -7,7 +7,7 @@ import { toast } from "sonner";
 export const AppContext = createContext({} as ContextProviderValue);
 
 export const AppContextProvider = ({ children }: ContextProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>(undefined);
 
   const fetchUserInfo = async function () {
     try {
@@ -26,7 +26,11 @@ export const AppContextProvider = ({ children }: ContextProviderProps) => {
           return;
         }
       }
+
+      setUser(null);
     } catch (e) {
+      setUser(null);
+
       console.log("get user info failed: ", e);
       toast.error("get user info failed");
     }
