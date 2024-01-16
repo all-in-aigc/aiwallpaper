@@ -16,7 +16,7 @@ export default function () {
           </div>
           <div className="flex grow flex-row flex-wrap lg:mx-10 lg:flex-nowrap lg:justify-center">
             <div className="my-5 mr-8 flex max-w-[200px] grow basis-[100px] flex-col space-y-5 lg:mx-10 lg:mt-0">
-              <p className="font-inter font-medium text-black">Products</p>
+              <p className="font-inter font-medium text-black">Friends</p>
               <a
                 href="https://gpts.works"
                 target="_blank"
@@ -40,13 +40,13 @@ export default function () {
               </a>
             </div>
             <div className="my-5 mr-8 flex max-w-[200px] grow basis-[100px] flex-col space-y-5 lg:mx-10 lg:mt-0">
-              <p className="font-inter font-medium text-black">Friends</p>
+              <p className="font-inter font-medium text-black">Credit to</p>
               <a
-                href="https://github.com/idoubi"
+                href="https://aiwallpaper.shop"
                 target="_blank"
                 className="font-inter font-light text-gray-500"
               >
-                idoubi
+                AI Wallpaper
               </a>
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function () {
             <a
               href="https://aiwallpaper.shop"
               target="_blank"
-              className="text-primary"
+              className="text-primary hidden md:inline-block"
             >
               aiwallpaper.shop
             </a>{" "}

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Tab } from "@/types/tab";
 import { useContext } from "react";
 import User from "@/components/user";
+import Social from "../social";
 
 export default function () {
   const { user } = useContext(AppContext);
@@ -42,6 +43,10 @@ export default function () {
             <div className="flex-1"></div>
 
             <div className="flex flex-row items-center lg:flex lg:flex-row lg:space-x-3 lg:space-y-0">
+              <div className="hidden md:block mr-4">
+                <Social />
+              </div>
+
               {user === undefined ? (
                 <>loading...</>
               ) : (
