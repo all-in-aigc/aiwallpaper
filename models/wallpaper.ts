@@ -62,7 +62,7 @@ export async function findWallpaperById(
 ): Promise<Wallpaper | undefined> {
   const db = getDb();
   const res = await db.query(
-    `select w.*, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from wallpapers as w left join users as u on w.user_email = u.email where w.id = $1`,
+    `select w.*, u.uuid as user_uuid, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from wallpapers as w left join users as u on w.user_email = u.email where w.id = $1`,
     [id]
   );
   if (res.rowCount === 0) {
@@ -79,7 +79,7 @@ export async function findWallpaperByUuid(
 ): Promise<Wallpaper | undefined> {
   const db = getDb();
   const res = await db.query(
-    `select w.*, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from wallpapers as w left join users as u on w.user_email = u.email where w.uuid = $1`,
+    `select w.*, u.uuid as user_uuid, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from wallpapers as w left join users as u on w.user_email = u.email where w.uuid = $1`,
     [uuid]
   );
   if (res.rowCount === 0) {
@@ -105,7 +105,7 @@ export async function getRandWallpapers(
 
   const db = getDb();
   const res = await db.query(
-    `select w.*, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from wallpapers as w left join users as u on w.user_email = u.email order by random() limit $1 offset $2`,
+    `select w.*, u.uuid as user_uuid, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from wallpapers as w left join users as u on w.user_email = u.email order by random() limit $1 offset $2`,
     [limit, offset]
   );
 
@@ -132,7 +132,7 @@ export async function getWallpapers(
 
   const db = getDb();
   const res = await db.query(
-    `select w.*, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from wallpapers as w left join users as u on w.user_email = u.email order by w.created_at desc limit $1 offset $2`,
+    `select w.*, u.uuid as user_uuid, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from wallpapers as w left join users as u on w.user_email = u.email order by w.created_at desc limit $1 offset $2`,
     [limit, offset]
   );
   if (res.rowCount === 0) {
@@ -181,6 +181,7 @@ export function formatWallpaper(row: QueryResultRow): Wallpaper | undefined {
       email: row.user_email,
       nickname: row.user_name,
       avatar_url: row.user_avatar,
+      uuid: row.user_uuid,
     };
   }
 
