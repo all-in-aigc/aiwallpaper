@@ -12,12 +12,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "@/types/user";
+import { useRouter } from "next/navigation";
 
 interface Props {
   user: User;
 }
 
 export default function ({ user }: Props) {
+  const router = useRouter();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -43,9 +46,7 @@ export default function ({ user }: Props) {
         <DropdownMenuSeparator className="md:hidden" />
 
         <DropdownMenuCheckboxItem>
-          <SignOutButton>
-            <button>Sign Out</button>
-          </SignOutButton>
+          <SignOutButton signOutCallback={() => location.reload()} />
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>

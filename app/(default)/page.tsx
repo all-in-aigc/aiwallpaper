@@ -47,10 +47,8 @@ export default function () {
   };
 
   useEffect(() => {
-    if (user !== undefined) {
-      fetchWallpapers(1);
-    }
-  }, [user]);
+    fetchWallpapers(1);
+  }, []);
 
   return (
     <div className="md:mt-16">
