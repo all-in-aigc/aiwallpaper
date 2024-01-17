@@ -53,9 +53,7 @@ export default function () {
           const wallpaper: Wallpaper = data;
           setWallpaper(wallpaper);
 
-          router.push(
-            `/wallpaper/${wallpaper.img_description}/${wallpaper.uuid}`
-          );
+          router.push(`/wallpaper/${wallpaper.uuid}`);
 
           toast.success("gen wallpaper ok");
           return;

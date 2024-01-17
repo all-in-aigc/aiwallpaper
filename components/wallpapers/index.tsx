@@ -21,9 +21,7 @@ export default async function () {
                   wallpapers.map((wallpaper: Wallpaper, idx: number) => {
                     return (
                       <a
-                        href={`/wallpaper/${encodeURIComponent(
-                          wallpaper.img_description
-                        )}/${wallpaper.uuid}`}
+                        href={`/wallpaper/${wallpaper.uuid}`}
                         key={idx}
                         className="rounded-xl overflow-hidden mb-4 inline-block border border-solid border-[#cdcdcd] md:mb-8 lg:mb-10"
                       >

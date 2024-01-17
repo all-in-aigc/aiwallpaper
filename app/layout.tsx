@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description:
     "AI Wallpaper Shop is an AI Wallpaper Generator, used to generate beautiful wallpapers with AI.",
   keywords:
-    "AI Wallpaper, AI Wallpaper Shop, AI Wallpaper Generator, AI Wallpaper image",
+    "AI Wallpaper, AI Wallpaper Shop, AI Wallpaper Generator, AI Wallpaper image, Photo Maker, Wallpaper Maker",
 };
 
 export default function RootLayout({

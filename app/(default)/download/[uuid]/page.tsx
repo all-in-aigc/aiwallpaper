@@ -3,11 +3,7 @@ import { findWallpaperByUuid } from "@/models/wallpaper";
 import { getUserCredits } from "@/services/order";
 import { redirect } from "next/navigation";
 
-export default async function ({
-  params,
-}: {
-  params: { uuid: string; img_description: string };
-}) {
+export default async function ({ params }: { params: { uuid: string } }) {
   const wallpaper = await findWallpaperByUuid(params.uuid);
   if (!wallpaper || !wallpaper) {
     return (
