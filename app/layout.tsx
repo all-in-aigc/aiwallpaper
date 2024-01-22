@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import { Analytics } from "@vercel/analytics/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
@@ -31,11 +32,13 @@ export default function RootLayout({
 
           {children}
 
-          <script
+          <Analytics />
+
+          {/* <script
             async
             src="https://chatgpt-umami.vercel.app/script.js"
             data-website-id="def28550-20ea-49d8-9c1a-68dbfaba0134"
-          ></script>
+          ></script> */}
         </body>
       </html>
     </ClerkProvider>

@@ -54,12 +54,15 @@ export default function () {
                   {user ? (
                     <>
                       {user.credits && (
-                        <div className="hidden md:block mr-8 font-medium cursor-pointer">
+                        <a
+                          href="/pricing"
+                          className="hidden md:block mr-8 font-medium cursor-pointer"
+                        >
                           credits:{" "}
                           <span className="text-primary">
                             {user.credits.left_credits}
                           </span>
-                        </div>
+                        </a>
                       )}
 
                       <User user={user} />
