@@ -27,33 +27,42 @@ export async function handleOrderSession(session_id: string) {
 
 export async function getUserCredits(user_email: string): Promise<UserCredits> {
   let user_credits: UserCredits = {
-    one_time_credits: 1,
+    one_time_credits: 0,
     monthly_credits: 0,
-    total_credits: 1,
+    total_credits: 0,
     used_credits: 0,
-    left_credits: 1,
+    left_credits: 0,
   };
 
   try {
     const used_credits = await getUserWallpapersCount(user_email);
-    user_credits.used_credits = used_credits;
+    user_credits.used_credits = Number(used_credits);
 
     const orders = await getUserOrders(user_email);
     if (!orders) {
       return user_credits;
     }
 
+    let monthly_credits = 0;
+    let one_time_credits = 0;
+    let total_credits = 0;
+
     orders.forEach((order: Order) => {
       if (order.plan === "monthly") {
-        user_credits.monthly_credits += order.credits;
+        monthly_credits += order.credits;
       } else {
-        user_credits.one_time_credits += order.credits;
+        one_time_credits += order.credits;
       }
-      user_credits.total_credits += order.credits;
+      total_credits += order.credits;
     });
 
-    user_credits.left_credits =
-      user_credits.total_credits - user_credits.used_credits;
+    user_credits.monthly_credits = monthly_credits;
+    user_credits.one_time_credits = one_time_credits;
+    user_credits.total_credits = total_credits;
+    user_credits.left_credits = total_credits - used_credits;
+    if (user_credits.left_credits < 0) {
+      user_credits.left_credits = 0;
+    }
 
     return user_credits;
   } catch (e) {
