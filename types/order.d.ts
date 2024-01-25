@@ -9,4 +9,5 @@ export interface Order {
   paied_at?: string;
   stripe_session_id?: string;
   credits: number;
+  currency: string;
 }

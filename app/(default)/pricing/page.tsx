@@ -16,6 +16,8 @@ const tiers = [
     unit: "/month",
     plan: "monthly",
     amount: 990,
+    currency: "usd",
+    credits: 50,
     description: "Popular plan for daily use",
     features: [
       "50 credits for image generation",
@@ -30,13 +32,15 @@ const tiers = [
     name: "One-time Payment",
     id: "one-time-payment",
     href: "#",
-    priceMonthly: "$12.9",
+    priceMonthly: "¥9.9",
     unit: "",
     plan: "one-time",
-    amount: 1290,
+    amount: 990,
+    currency: "cny",
+    credits: 5,
     description: "Trial Plan for short-term Use",
     features: [
-      "50 credits for image generation",
+      "5 credits for image generation",
       "Valid for 1 month",
       "Standard quality image",
       "Normal generation speed",
@@ -54,12 +58,18 @@ export default function () {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const handleCheckout = async (plan: string, amount: number) => {
+  const handleCheckout = async (
+    plan: string,
+    amount: number,
+    currency: string,
+    credits: number
+  ) => {
     try {
       const params = {
         plan: plan,
-        credits: 50,
+        credits: credits,
         amount: amount,
+        currency: currency,
       };
 
       setLoading(true);
@@ -70,9 +80,10 @@ export default function () {
         },
         body: JSON.stringify(params),
       });
-      setLoading(false);
 
       if (response.status === 401) {
+        setLoading(false);
+
         toast.error("need login");
         router.push("/sign-in");
         return;
@@ -80,6 +91,8 @@ export default function () {
 
       const { code, message, data } = await response.json();
       if (!data) {
+        setLoading(false);
+
         toast.error(message);
         return;
       }
@@ -87,6 +100,8 @@ export default function () {
 
       const stripe = await loadStripe(public_key);
       if (!stripe) {
+        setLoading(false);
+
         toast.error("checkout failed");
         return;
       }
@@ -97,11 +112,16 @@ export default function () {
       console.log("result", result);
 
       if (result.error) {
+        setLoading(false);
+
         // 处理错误
         toast.error(result.error.message);
       }
     } catch (e) {
+      setLoading(false);
+
       console.log("checkout failed: ", e);
+
       toast.error("checkout failed");
     }
   };
@@ -165,7 +185,12 @@ export default function () {
               className="mt-8 w-full"
               disabled={loading}
               onClick={() => {
-                handleCheckout(tier.plan, tier.amount);
+                handleCheckout(
+                  tier.plan,
+                  tier.amount,
+                  tier.currency,
+                  tier.credits
+                );
               }}
             >
               {loading ? "Processing..." : "Buy plan"}

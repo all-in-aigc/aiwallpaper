@@ -30,5 +30,6 @@ CREATE TABLE orders (
     order_status SMALLINT NOT NULL,
     paied_at timestamptz,
     stripe_session_id VARCHAR(255),
-    credits INT NOT NULL
+    credits INT NOT NULL,
+    currency VARCHAR(50)
 );

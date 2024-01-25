@@ -17,8 +17,8 @@ export async function POST(req: Request) {
   console.log("user email: ", user_email);
 
   try {
-    const { credits, amount, plan } = await req.json();
-    if (!credits || !amount || !plan) {
+    const { credits, currency, amount, plan } = await req.json();
+    if (!credits || !amount || !plan || !currency) {
       return respErr("invalid params");
     }
 
@@ -44,24 +44,20 @@ export async function POST(req: Request) {
       expired_at: expired_at,
       order_status: 1,
       credits: credits,
+      currency: currency,
     };
     insertOrder(order);
     console.log("create new order: ", order);
 
     const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY || "");
 
-    const session = await stripe.checkout.sessions.create({
+    let options: Stripe.Checkout.SessionCreateParams = {
       customer_email: user_email,
-      payment_method_types: ["card", "wechat_pay"],
-      payment_method_options: {
-        wechat_pay: {
-          client: "web",
-        },
-      },
+      payment_method_types: ["card"],
       line_items: [
         {
           price_data: {
-            currency: "usd",
+            currency: currency,
             product_data: {
               name: "aiwallpaper.shop credits plan",
             },
@@ -87,7 +83,18 @@ export async function POST(req: Request) {
       mode: plan === "monthly" ? "subscription" : "payment",
       success_url: `${process.env.WEB_BASE_URI}/pay-success/{CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.WEB_BASE_URI}/pricing`,
-    });
+    };
+
+    if (currency === "cny") {
+      options.payment_method_types = ["wechat_pay", "card"];
+      options.payment_method_options = {
+        wechat_pay: {
+          client: "web",
+        },
+      };
+    }
+
+    const session = await stripe.checkout.sessions.create(options);
 
     const stripe_session_id = session.id;
     updateOrderSession(order_no, stripe_session_id);
