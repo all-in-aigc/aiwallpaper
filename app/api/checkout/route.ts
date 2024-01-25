@@ -52,7 +52,7 @@ export async function POST(req: Request) {
 
     const session = await stripe.checkout.sessions.create({
       customer_email: user_email,
-      payment_method_types: ["card"],
+      payment_method_types: ["card", "wechat_pay", "alipay"],
       line_items: [
         {
           price_data: {
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      allow_promotion_codes: true,
+      allow_promotion_codes: false,
       metadata: {
         project: "aiwallpaper",
         pay_scene: "buy-credits",
