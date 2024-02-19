@@ -42,18 +42,28 @@ export default function () {
             <div className="my-5 mr-8 flex max-w-[200px] grow basis-[100px] flex-col space-y-5 lg:mx-10 lg:mt-0">
               <p className="font-inter font-medium text-black">Credit to</p>
               <a
-                href="https://aiwallpaper.shop"
+                href="https://aicover.design"
                 target="_blank"
                 className="font-inter font-light text-gray-500"
               >
-                AI Wallpaper
+                AI Cover
               </a>
             </div>
           </div>
+
           <div className="mt-10 flex flex-col lg:mt-0">
-            <div className="mb-4 flex flex-row items-center">
-              <p className="block">contact: </p>
-              <p className="font-inter ml-4 text-black">me@idoubi.cc</p>
+            <div className="mb-4 flex flex-col items-center">
+              <p className="font-inter font-medium text-black">Contact me</p>
+              <p className="font-inter ml-4 text-black">
+                <img
+                  src={
+                    "https://zknown-1251007641.cos.ap-guangzhou.myqcloud.com/images/20240130090120.png"
+                  }
+                  alt="qrcode"
+                  width={"250"}
+                  height={"400"}
+                />
+              </p>
             </div>
           </div>
         </div>
