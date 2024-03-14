@@ -27,12 +27,30 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          <link rel="icon" href="/favicon.ico" />
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-9GX15580E9"
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                      window.dataLayer = window.dataLayer || [];
+                      function gtag(){dataLayer.push(arguments);}
+                      gtag('js', new Date());
+                    
+                      gtag('config', 'G-9GX15580E9');
+                      `,
+            }}
+          ></script>
+        </head>
         <body className={inter.className}>
           <Toaster position="top-center" richColors />
 
           {children}
 
-          <Analytics />
+          {/* <Analytics /> */}
 
           {/* <script
             async
